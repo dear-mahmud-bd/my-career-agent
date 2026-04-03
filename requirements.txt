@@ -1,51 +1,56 @@
 # pip install -r requirements.txt
 
-# Web framework
+# 01. Web framework
 fastapi==0.111.0
 uvicorn[standard]==0.30.1
 python-multipart==0.0.9
+jinja2==3.1.4
+aiofiles==23.2.1
 
-# Database
+# 02. Database
 sqlalchemy==2.0.31
 alembic==1.13.2
 aiosqlite==0.20.0
 
-# Task queue
+# 03. Task queue
 celery==5.4.0
 redis==5.0.7
 flower==2.0.1
 
-# AI / matching (free options only)
+# 04.  AI / matching (free — dual provider with auto fallback)
 ollama==0.3.0
 groq==0.11.0
 
 # pip install -r requirements.txt
 
-# Job scraping
+# 05. Job scraping
 python-jobspy==1.1.75
 beautifulsoup4==4.12.3
 httpx==0.27.0
 feedparser==6.0.11
 
-# Notifications
+# 06. Notifications
 python-telegram-bot==21.5
 
-# Config & validation
+# 07. Config & validation
 pydantic==2.8.2
 pydantic-settings==2.4.0
 python-dotenv==1.0.1
 
-# Scheduling
+# 08. Scheduling
 apscheduler==3.10.4
 
 # pip install -r requirements.txt
 
-# Utilities
+# 09. Utilities
 loguru==0.7.2
 tenacity==8.5.0
 jinja2==3.1.4
 
-# Testing
+# 10. CV parsing (for uploaded CV reading)
+pypdf==4.3.1
+
+# 11. Testing
 pytest==8.3.2
 pytest-asyncio==0.23.8
 httpx==0.27.0

@@ -1,0 +1,6 @@
+2026-04-04 03:55:33 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-04 03:55:33 | INFO     | __main__:14 | Tables created: ['profile', 'skills', 'skill_checkins', 'job_preferences', 'job_sources', 'jobs', 'job_matches', 'resumes', 'notifications']
+2026-04-04 03:55:33 | SUCCESS  | __main__:15 | Database models OK ✅
+2026-04-04 03:56:02 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-04 03:56:02 | INFO     | __main__:14 | Tables created: ['profile', 'skills', 'skill_checkins', 'job_preferences', 'job_sources', 'jobs', 'job_matches', 'resumes', 'notifications']
+2026-04-04 03:56:02 | SUCCESS  | __main__:15 | Database models OK ✅
