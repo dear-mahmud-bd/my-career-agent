@@ -10,3 +10,15 @@
 2026-04-04 04:18:54 | INFO     | __main__:11 | Ollama model        : mistral
 2026-04-04 04:18:54 | SUCCESS  | __main__:12 | LLM router OK ✅
 2026-04-04 04:30:38 | SUCCESS  | __main__:13 | Job scraper modules loaded OK ✅
+2026-04-04 04:37:22 | INFO     | __main__:5 | SkillMatcher class loaded
+2026-04-04 04:37:22 | INFO     | __main__:6 | System prompt length: 212 chars
+2026-04-04 04:37:22 | SUCCESS  | __main__:7 | Skill matcher module OK ✅
+2026-04-04 04:43:17 | INFO     | app.workers.celery_app:71 | Celery app configured ✅
+2026-04-04 04:43:17 | INFO     | __main__:29 | Celery app name  : career_agent
+2026-04-04 04:43:17 | INFO     | __main__:30 | Broker           : redis://localhost:6379/0
+2026-04-04 04:43:17 | INFO     | __main__:31 | Scheduled tasks  : 5
+2026-04-04 04:43:18 | INFO     | __main__:32 | Registered tasks : 15
+2026-04-04 04:43:18 | SUCCESS  | __main__:33 | Celery workers OK ✅
+2026-04-04 04:46:41 | INFO     | __main__:35 | Telegram token set : True
+2026-04-04 04:46:41 | INFO     | __main__:36 | Telegram chat set  : True
+2026-04-04 04:46:41 | SUCCESS  | __main__:37 | Notification service OK ✅
