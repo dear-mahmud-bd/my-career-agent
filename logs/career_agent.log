@@ -4,3 +4,8 @@
 2026-04-04 03:56:02 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
 2026-04-04 03:56:02 | INFO     | __main__:14 | Tables created: ['profile', 'skills', 'skill_checkins', 'job_preferences', 'job_sources', 'jobs', 'job_matches', 'resumes', 'notifications']
 2026-04-04 03:56:02 | SUCCESS  | __main__:15 | Database models OK ✅
+2026-04-04 04:18:54 | INFO     | __main__:8 | Active LLM provider : groq
+2026-04-04 04:18:54 | INFO     | __main__:9 | Configured provider : auto
+2026-04-04 04:18:54 | INFO     | __main__:10 | Groq model          : llama-3.3-70b-versatile
+2026-04-04 04:18:54 | INFO     | __main__:11 | Ollama model        : mistral
+2026-04-04 04:18:54 | SUCCESS  | __main__:12 | LLM router OK ✅
