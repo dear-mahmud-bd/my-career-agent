@@ -9,3 +9,4 @@
 2026-04-04 04:18:54 | INFO     | __main__:10 | Groq model          : llama-3.3-70b-versatile
 2026-04-04 04:18:54 | INFO     | __main__:11 | Ollama model        : mistral
 2026-04-04 04:18:54 | SUCCESS  | __main__:12 | LLM router OK ✅
+2026-04-04 04:30:38 | SUCCESS  | __main__:13 | Job scraper modules loaded OK ✅
