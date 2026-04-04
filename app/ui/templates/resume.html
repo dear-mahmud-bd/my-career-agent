@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Resume — Career Agent{% endblock %}
+{% block page_title %}Resume / CV{% endblock %}
+{% block page_subtitle %}Manage and generate your LaTeX CV{% endblock %}
+
+{% block header_actions %}
+<form method="post" action="/api/v1/resume/generate">
+    <button type="submit"
+            class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700
+                   text-white text-sm font-medium px-4 py-2 rounded-lg transition-all shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 4v16m8-8H4"/>
+        </svg>
+        Generate New CV
+    </button>
+</form>
+{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- Upload CV -->
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+        <div class="px-5 py-4 border-b border-gray-100">
+            <h2 class="font-semibold text-gray-800 text-sm">Upload Existing CV</h2>
+            <p class="text-xs text-gray-400 mt-0.5">
+                Upload your PDF CV to extract skills automatically
+            </p>
+        </div>
+        <form method="post" action="/api/v1/resume/upload"
+              enctype="multipart/form-data" class="px-5 py-4">
+            <div class="border-2 border-dashed border-gray-200 rounded-xl p-8
+                        text-center hover:border-indigo-300 transition-all cursor-pointer"
+                 onclick="document.getElementById('cv-upload').click()">
+                <svg class="w-10 h-10 text-gray-300 mx-auto mb-3" fill="none"
+                     stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                </svg>
+                <p class="text-sm text-gray-500">Click to upload PDF</p>
+                <p class="text-xs text-gray-400 mt-1">PDF only, max 10MB</p>
+                <input type="file" id="cv-upload" name="file"
+                       accept=".pdf" class="hidden"
+                       onchange="document.getElementById('upload-name').textContent = this.files[0]?.name"/>
+            </div>
+            <p id="upload-name" class="text-xs text-indigo-600 mt-2 text-center"></p>
+            <button type="submit"
+                    class="w-full mt-3 bg-gray-800 hover:bg-gray-900 text-white
+                           text-sm font-medium py-2.5 rounded-lg transition-all">
+                Upload & Extract Skills
+            </button>
+        </form>
+    </div>
+
+    <!-- CV Versions -->
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+        <div class="px-5 py-4 border-b border-gray-100">
+            <h2 class="font-semibold text-gray-800 text-sm">CV Versions</h2>
+        </div>
+        <div class="divide-y divide-gray-50">
+            {% if resumes %}
+                {% for resume in resumes %}
+                <div class="px-5 py-3 flex items-center justify-between hover:bg-gray-50">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <p class="text-sm font-medium text-gray-800">
+                                {{ resume.version }}
+                            </p>
+                            {% if resume.is_active %}
+                            <span class="text-xs bg-green-100 text-green-700
+                                         px-2 py-0.5 rounded-full font-medium">
+                                Active
+                            </span>
+                            {% endif %}
+                            {% if resume.is_uploaded %}
+                            <span class="text-xs bg-blue-100 text-blue-700
+                                         px-2 py-0.5 rounded-full">
+                                Uploaded
+                            </span>
+                            {% endif %}
+                        </div>
+                        <p class="text-xs text-gray-400 mt-0.5">
+                            {{ resume.created_at.strftime('%B %d, %Y %H:%M') if resume.created_at }}
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <a href="/api/v1/resume/{{ resume.id }}/download"
+                           class="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-600
+                                  font-medium px-3 py-1.5 rounded-lg transition-all">
+                            Download
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="px-5 py-10 text-center">
+                    <p class="text-sm text-gray-400">No CV generated yet.</p>
+                    <p class="text-xs text-gray-300 mt-1">
+                        Fill your profile and click Generate New CV.
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

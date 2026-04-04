@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — Career Agent{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_subtitle %}Overview of your job search activity{% endblock %}
+
+{% block header_actions %}
+<form method="post" action="/api/v1/jobs/trigger-scrape">
+    <button type="submit"
+            class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700
+                   text-white text-sm font-medium px-4 py-2 rounded-lg transition-all shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+        </svg>
+        Scan Jobs Now
+    </button>
+</form>
+{% endblock %}
+
+{% block content %}
+
+<!-- ── Stats row ── -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+
+    <!-- Total Jobs -->
+    <div class="bg-white rounded-xl border border-gray-200 px-5 py-4 shadow-sm">
+        <p class="text-xs text-gray-400 font-medium uppercase tracking-wide">Total Jobs</p>
+        <p class="text-3xl font-bold text-gray-900 mt-1">{{ stats.total_jobs or 0 }}</p>
+        <p class="text-xs text-gray-400 mt-1">scraped so far</p>
+    </div>
+
+    <!-- Matches -->
+    <div class="bg-white rounded-xl border border-gray-200 px-5 py-4 shadow-sm">
+        <p class="text-xs text-gray-400 font-medium uppercase tracking-wide">Good Matches</p>
+        <p class="text-3xl font-bold text-indigo-600 mt-1">{{ stats.good_matches or 0 }}</p>
+        <p class="text-xs text-gray-400 mt-1">above {{ stats.threshold or 65 }}% score</p>
+    </div>
+
+    <!-- Notifications -->
+    <div class="bg-white rounded-xl border border-gray-200 px-5 py-4 shadow-sm">
+        <p class="text-xs text-gray-400 font-medium uppercase tracking-wide">Notifications Sent</p>
+        <p class="text-3xl font-bold text-green-600 mt-1">{{ stats.notifications_sent or 0 }}</p>
+        <p class="text-xs text-gray-400 mt-1">via Telegram</p>
+    </div>
+
+    <!-- Skills -->
+    <div class="bg-white rounded-xl border border-gray-200 px-5 py-4 shadow-sm">
+        <p class="text-xs text-gray-400 font-medium uppercase tracking-wide">My Skills</p>
+        <p class="text-3xl font-bold text-purple-600 mt-1">{{ stats.total_skills or 0 }}</p>
+        <p class="text-xs text-gray-400 mt-1">in profile</p>
+    </div>
+</div>
+
+<!-- ── Two columns ── -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- Top matches -->
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+        <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+            <h2 class="font-semibold text-gray-800 text-sm">Top Job Matches</h2>
+            <a href="/jobs" class="text-xs text-indigo-600 hover:underline">View all</a>
+        </div>
+        <div class="divide-y divide-gray-50">
+            {% if top_matches %}
+                {% for match in top_matches %}
+                <div class="px-5 py-3 hover:bg-gray-50 transition-all">
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium text-gray-900 truncate">
+                                {{ match.title }}
+                            </p>
+                            <p class="text-xs text-gray-400 mt-0.5">
+                                {{ match.company }}
+                                {% if match.work_type %}
+                                · <span class="capitalize">{{ match.work_type }}</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <span class="shrink-0 text-xs font-bold px-2.5 py-1 rounded-full
+                            {% if match.match_score >= 85 %}bg-green-100 text-green-700
+                            {% elif match.match_score >= 70 %}bg-blue-100 text-blue-700
+                            {% else %}bg-yellow-100 text-yellow-700{% endif %}">
+                            {{ match.match_score | int }}%
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="px-5 py-8 text-center">
+                    <p class="text-sm text-gray-400">No matches yet.</p>
+                    <p class="text-xs text-gray-300 mt-1">
+                        Click "Scan Jobs Now" to start.
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Recent notifications -->
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+        <div class="px-5 py-4 border-b border-gray-100">
+            <h2 class="font-semibold text-gray-800 text-sm">Recent Notifications</h2>
+        </div>
+        <div class="divide-y divide-gray-50">
+            {% if recent_notifications %}
+                {% for notif in recent_notifications %}
+                <div class="px-5 py-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-7 h-7 rounded-full flex items-center justify-center shrink-0
+                            {% if notif.is_sent %}bg-green-100{% else %}bg-red-100{% endif %}">
+                            <span class="text-xs">
+                                {% if notif.is_sent %}✓{% else %}✗{% endif %}
+                            </span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm text-gray-700 truncate">{{ notif.title }}</p>
+                            <p class="text-xs text-gray-400 mt-0.5">
+                                {{ notif.channel | capitalize }}
+                                · {{ notif.created_at.strftime('%b %d, %H:%M') if notif.created_at }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="px-5 py-8 text-center">
+                    <p class="text-sm text-gray-400">No notifications sent yet.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

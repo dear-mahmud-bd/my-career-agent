@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Job Matches — Career Agent{% endblock %}
+{% block page_title %}Job Matches{% endblock %}
+{% block page_subtitle %}All matched jobs sorted by score{% endblock %}
+
+{% block header_actions %}
+<div class="flex items-center gap-2">
+    <select name="work_type" onchange="filterJobs(this.value)"
+            class="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-600
+                   focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <option value="">All types</option>
+        <option value="remote">Remote</option>
+        <option value="onsite">On-site</option>
+        <option value="hybrid">Hybrid</option>
+    </select>
+    <select name="location_type" onchange="filterLocation(this.value)"
+            class="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-600
+                   focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <option value="">All locations</option>
+        <option value="local">Local</option>
+        <option value="foreign">Foreign</option>
+    </select>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-4" id="jobs-list">
+    {% if jobs %}
+        {% for job in jobs %}
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm
+                    hover:border-indigo-200 hover:shadow-md transition-all
+                    job-card"
+             data-work-type="{{ job.work_type }}"
+             data-location-type="{{ job.location_type }}">
+
+            <div class="px-6 py-4">
+                <div class="flex items-start justify-between gap-4">
+
+                    <!-- Left -->
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h3 class="text-base font-semibold text-gray-900">
+                                {{ job.title }}
+                            </h3>
+                            <!-- Work type badge -->
+                            <span class="text-xs px-2 py-0.5 rounded-full font-medium
+                                {% if job.work_type == 'remote' %}bg-green-100 text-green-700
+                                {% elif job.work_type == 'onsite' %}bg-blue-100 text-blue-700
+                                {% elif job.work_type == 'hybrid' %}bg-purple-100 text-purple-700
+                                {% else %}bg-gray-100 text-gray-600{% endif %}">
+                                {{ job.work_type | capitalize }}
+                            </span>
+                            <!-- Location type badge -->
+                            <span class="text-xs px-2 py-0.5 rounded-full font-medium
+                                {% if job.location_type == 'local' %}bg-yellow-100 text-yellow-700
+                                {% else %}bg-indigo-100 text-indigo-700{% endif %}">
+                                {{ job.location_type | capitalize }}
+                            </span>
+                        </div>
+
+                        <p class="text-sm text-gray-500 mt-1">
+                            {{ job.company }}
+                            {% if job.location %}· {{ job.location }}{% endif %}
+                            {% if job.salary_min %}
+                            · ${{ "{:,}".format(job.salary_min) }}
+                            {% if job.salary_max %}— ${{ "{:,}".format(job.salary_max) }}{% endif %}
+                            {% endif %}
+                        </p>
+
+                        <!-- Matched skills -->
+                        {% if job.matched_skills %}
+                        <div class="flex flex-wrap gap-1.5 mt-2">
+                            {% for skill in job.matched_skills.split(',') %}
+                            <span class="text-xs bg-indigo-50 text-indigo-600
+                                         px-2 py-0.5 rounded-full">
+                                {{ skill.strip() }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <!-- Match reason -->
+                        {% if job.match_reason %}
+                        <p class="text-xs text-gray-400 mt-2 italic">
+                            {{ job.match_reason }}
+                        </p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Right — score + actions -->
+                    <div class="flex flex-col items-end gap-3 shrink-0">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold
+                                {% if job.match_score >= 85 %}text-green-600
+                                {% elif job.match_score >= 70 %}text-indigo-600
+                                {% else %}text-yellow-500{% endif %}">
+                                {{ job.match_score | int }}%
+                            </div>
+                            <div class="text-xs text-gray-400">match</div>
+                        </div>
+
+                        <a href="{{ job.url }}" target="_blank"
+                           class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white
+                                  font-medium px-3 py-1.5 rounded-lg transition-all">
+                            Apply →
+                        </a>
+
+                        <!-- Missing skills -->
+                        {% if job.missing_skills %}
+                        <div class="text-right">
+                            <p class="text-xs text-gray-400">Missing:</p>
+                            <p class="text-xs text-red-400">
+                                {{ job.missing_skills[:60] }}
+                                {% if job.missing_skills|length > 60 %}...{% endif %}
+                            </p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="bg-white rounded-xl border border-gray-200 px-6 py-16 text-center">
+            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+            </div>
+            <p class="text-gray-500 font-medium">No job matches yet</p>
+            <p class="text-sm text-gray-400 mt-1">
+                Add your skills and job preferences, then click Scan Jobs Now.
+            </p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function filterJobs(workType) {
+    document.querySelectorAll('.job-card').forEach(card => {
+        if (!workType || card.dataset.workType === workType) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+function filterLocation(locType) {
+    document.querySelectorAll('.job-card').forEach(card => {
+        if (!locType || card.dataset.locationType === locType) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+</script>
+{% endblock %}

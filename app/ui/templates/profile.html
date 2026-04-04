@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+
+{% block title %}Profile — Career Agent{% endblock %}
+{% block page_title %}My Profile{% endblock %}
+{% block page_subtitle %}Personal info, skills and job preferences{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- ── Personal Info ── -->
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+        <div class="px-5 py-4 border-b border-gray-100">
+            <h2 class="font-semibold text-gray-800 text-sm">Personal Information</h2>
+        </div>
+        <form method="post" action="/api/v1/profile/update" class="px-5 py-4 space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Full Name</label>
+                    <input type="text" name="full_name"
+                           value="{{ profile.full_name or '' }}"
+                           class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                  focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Current Title</label>
+                    <input type="text" name="current_title"
+                           value="{{ profile.current_title or '' }}"
+                           class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                  focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Email</label>
+                    <input type="email" name="email"
+                           value="{{ profile.email or '' }}"
+                           class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                  focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Phone</label>
+                    <input type="text" name="phone"
+                           value="{{ profile.phone or '' }}"
+                           class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                  focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Location</label>
+                <input type="text" name="location"
+                       value="{{ profile.location or '' }}"
+                       placeholder="e.g. Dhaka, Bangladesh"
+                       class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                              focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Professional Summary</label>
+                <textarea name="summary" rows="4"
+                          class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                 focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none">{{ profile.summary or '' }}</textarea>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">LinkedIn URL</label>
+                    <input type="url" name="linkedin_url"
+                           value="{{ profile.linkedin_url or '' }}"
+                           class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                  focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">GitHub URL</label>
+                    <input type="url" name="github_url"
+                           value="{{ profile.github_url or '' }}"
+                           class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                  focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
+                </div>
+            </div>
+            <button type="submit"
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white
+                           text-sm font-medium py-2.5 rounded-lg transition-all">
+                Save Profile
+            </button>
+        </form>
+    </div>
+
+    <!-- ── Skills + Preferences ── -->
+    <div class="space-y-6">
+
+        <!-- Skills -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+            <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+                <h2 class="font-semibold text-gray-800 text-sm">My Skills</h2>
+                <span class="text-xs text-gray-400">{{ skills|length }} skills</span>
+            </div>
+
+            <!-- Add skill -->
+            <form method="post" action="/api/v1/profile/skills/add"
+                  class="px-5 py-3 border-b border-gray-50">
+                <div class="flex gap-2">
+                    <input type="text" name="name" placeholder="Skill name"
+                           required
+                           class="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                  focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
+                    <select name="level"
+                            class="px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                   focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate" selected>Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                        <option value="expert">Expert</option>
+                    </select>
+                    <select name="category"
+                            class="px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                   focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                        <option value="language">Language</option>
+                        <option value="framework">Framework</option>
+                        <option value="tool">Tool</option>
+                        <option value="database">Database</option>
+                        <option value="cloud">Cloud</option>
+                        <option value="soft_skill">Soft Skill</option>
+                    </select>
+                    <button type="submit"
+                            class="bg-indigo-600 hover:bg-indigo-700 text-white
+                                   text-sm font-medium px-4 py-2 rounded-lg transition-all">
+                        Add
+                    </button>
+                </div>
+            </form>
+
+            <!-- Skills list -->
+            <div class="px-5 py-3 flex flex-wrap gap-2 max-h-48 overflow-y-auto">
+                {% if skills %}
+                    {% for skill in skills %}
+                    <div class="flex items-center gap-1.5 bg-gray-50 border border-gray-200
+                                rounded-full pl-3 pr-1.5 py-1">
+                        <span class="text-xs font-medium text-gray-700">{{ skill.name }}</span>
+                        <span class="text-xs text-gray-400">{{ skill.level }}</span>
+                        <form method="post" action="/api/v1/profile/skills/{{ skill.id }}/delete"
+                              class="inline">
+                            <button type="submit"
+                                    class="w-4 h-4 flex items-center justify-center
+                                           text-gray-300 hover:text-red-500 transition-all">
+                                ×
+                            </button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-sm text-gray-400">No skills added yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Job Preferences -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+            <div class="px-5 py-4 border-b border-gray-100">
+                <h2 class="font-semibold text-gray-800 text-sm">Job Preferences</h2>
+            </div>
+            <form method="post" action="/api/v1/profile/preferences/update"
+                  class="px-5 py-4 space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Work Type</label>
+                        <select name="work_type"
+                                class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                       focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                            <option value="any" {% if preferences and preferences.work_type == 'any' %}selected{% endif %}>Any</option>
+                            <option value="remote" {% if preferences and preferences.work_type == 'remote' %}selected{% endif %}>Remote</option>
+                            <option value="onsite" {% if preferences and preferences.work_type == 'onsite' %}selected{% endif %}>On-site</option>
+                            <option value="hybrid" {% if preferences and preferences.work_type == 'hybrid' %}selected{% endif %}>Hybrid</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Location Type</label>
+                        <select name="location_type"
+                                class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                       focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                            <option value="both" {% if preferences and preferences.location_type == 'both' %}selected{% endif %}>Both</option>
+                            <option value="local" {% if preferences and preferences.location_type == 'local' %}selected{% endif %}>Local Only</option>
+                            <option value="foreign" {% if preferences and preferences.location_type == 'foreign' %}selected{% endif %}>Foreign Only</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Preferred Country</label>
+                        <input type="text" name="preferred_country"
+                               value="{{ preferences.preferred_country or '' if preferences }}"
+                               placeholder="e.g. Bangladesh"
+                               class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                      focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Preferred City</label>
+                        <input type="text" name="preferred_city"
+                               value="{{ preferences.preferred_city or '' if preferences }}"
+                               placeholder="e.g. Dhaka"
+                               class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                      focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">
+                        Job Titles to Search
+                    </label>
+                    <input type="text" name="job_titles"
+                           value="{{ preferences.job_titles or '' if preferences }}"
+                           placeholder="Software Engineer, Backend Developer, Python Developer"
+                           class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                  focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
+                    <p class="text-xs text-gray-400 mt-1">Comma separated</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Experience Level</label>
+                        <select name="experience_level"
+                                class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                       focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                            <option value="junior" {% if preferences and preferences.experience_level == 'junior' %}selected{% endif %}>Junior</option>
+                            <option value="mid" {% if preferences and preferences.experience_level == 'mid' %}selected{% endif %}>Mid</option>
+                            <option value="senior" {% if preferences and preferences.experience_level == 'senior' %}selected{% endif %}>Senior</option>
+                            <option value="any" {% if preferences and preferences.experience_level == 'any' %}selected{% endif %}>Any</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Min Salary (USD)</label>
+                        <input type="number" name="min_salary"
+                               value="{{ preferences.min_salary or '' if preferences }}"
+                               placeholder="e.g. 30000"
+                               class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg
+                                      focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
+                    </div>
+                </div>
+                <button type="submit"
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white
+                               text-sm font-medium py-2.5 rounded-lg transition-all">
+                    Save Preferences
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

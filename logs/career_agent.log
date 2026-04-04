@@ -22,3 +22,17 @@
 2026-04-04 04:46:41 | INFO     | __main__:35 | Telegram token set : True
 2026-04-04 04:46:41 | INFO     | __main__:36 | Telegram chat set  : True
 2026-04-04 04:46:41 | SUCCESS  | __main__:37 | Notification service OK ✅
+2026-04-04 13:46:15 | INFO     | __main__:63 | Template exists : True
+2026-04-04 13:46:15 | INFO     | __main__:64 | Output dir      : True
+2026-04-04 13:46:15 | INFO     | __main__:65 | CVGenerator loaded
+2026-04-04 13:46:15 | INFO     | __main__:66 | CVParser loaded
+2026-04-04 13:46:15 | SUCCESS  | __main__:67 | CV generator module OK ✅
+2026-04-04 13:57:00 | INFO     | __main__:65 | ✅ app/ui/templates/base.html
+2026-04-04 13:57:00 | INFO     | __main__:65 | ✅ app/ui/templates/login.html
+2026-04-04 13:57:00 | INFO     | __main__:65 | ✅ app/ui/templates/dashboard.html
+2026-04-04 13:57:00 | INFO     | __main__:65 | ✅ app/ui/templates/jobs.html
+2026-04-04 13:57:00 | INFO     | __main__:65 | ✅ app/ui/templates/profile.html
+2026-04-04 13:57:00 | INFO     | __main__:65 | ✅ app/ui/templates/resume.html
+2026-04-04 13:57:00 | INFO     | __main__:65 | ✅ app/ui/templates/sources.html
+2026-04-04 13:57:00 | INFO     | __main__:65 | ✅ app/ui/static/js/main.js
+2026-04-04 13:57:00 | SUCCESS  | __main__:67 | All UI templates OK ✅
