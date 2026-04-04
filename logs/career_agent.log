@@ -36,3 +36,27 @@
 2026-04-04 13:57:00 | INFO     | __main__:65 | ✅ app/ui/templates/sources.html
 2026-04-04 13:57:00 | INFO     | __main__:65 | ✅ app/ui/static/js/main.js
 2026-04-04 13:57:00 | SUCCESS  | __main__:67 | All UI templates OK ✅
+2026-04-04 14:02:23 | INFO     | app.workers.celery_app:71 | Celery app configured ✅
+2026-04-04 14:02:23 | INFO     | __main__:49 | Total routes registered: 16
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /dashboard
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /profile
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /api/v1/profile/update
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /api/v1/profile/skills/add
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /api/v1/profile/skills/{skill_id}/delete
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /api/v1/profile/preferences/update
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /jobs
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /api/v1/jobs/trigger-scrape
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /sources
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /api/v1/sources/add
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /api/v1/sources/{source_id}/toggle
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /api/v1/sources/{source_id}/delete
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /resume
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /api/v1/resume/generate
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /api/v1/resume/upload
+2026-04-04 14:02:23 | INFO     | __main__:51 |   /api/v1/resume/{resume_id}/download
+2026-04-04 14:02:23 | SUCCESS  | __main__:52 | API endpoints OK ✅
+2026-04-05 02:00:12 | INFO     | app.workers.celery_app:71 | Celery app configured ✅
+2026-04-05 02:00:12 | INFO     | __main__:22 | App title    : Career Agent
+2026-04-05 02:00:12 | INFO     | __main__:23 | Total routes : 26
+2026-04-05 02:00:12 | INFO     | __main__:24 | Routes: /openapi.json, /docs, /docs/oauth2-redirect, /redoc, /static, /login, /login, /logout, /, /dashboard, /profile, /api/v1/profile/update, /api/v1/profile/skills/add, /api/v1/profile/skills/{skill_id}/delete, /api/v1/profile/preferences/update, /jobs, /api/v1/jobs/trigger-scrape, /sources, /api/v1/sources/add, /api/v1/sources/{source_id}/toggle, /api/v1/sources/{source_id}/delete, /resume, /api/v1/resume/generate, /api/v1/resume/upload, /api/v1/resume/{resume_id}/download, /health
+2026-04-05 02:00:12 | SUCCESS  | __main__:25 | main.py OK ✅
