@@ -1,0 +1,66 @@
+2026-04-05 02:18:05 | ERROR    | app.services.resume.generator:29 | No profile found. Please create your profile from the UI.
+2026-04-05 14:25:53 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Can't parse entities: can't find end of the entity starting at byte offset 285
+2026-04-05 14:25:53 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Software Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 14:25:53 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Backend Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 14:25:53 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Python Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 14:25:54 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Chat not found
+2026-04-05 14:26:29 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Can't parse entities: can't find end of the entity starting at byte offset 285
+2026-04-05 14:26:29 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Software Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 14:26:29 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Backend Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 14:26:29 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Python Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 14:26:30 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Chat not found
+2026-04-05 14:32:41 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Chat not found
+2026-04-05 14:36:36 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Chat not found
+2026-04-05 15:33:58 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: httpx.ConnectError: [Errno -3] Temporary failure in name resolution
+2026-04-05 15:34:51 | ERROR    | __main__:30 | Bot not available — check token and chat ID
+2026-04-05 15:45:09 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Chat not found
+2026-04-05 19:11:05 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Can't parse entities: can't find end of the entity starting at byte offset 272
+2026-04-05 19:11:05 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Software Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 19:11:05 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Backend Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 19:11:05 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Python Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 19:13:55 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Can't parse entities: can't find end of the entity starting at byte offset 272
+2026-04-05 19:13:55 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Software Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 19:13:55 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Backend Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 19:13:55 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Python Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 19:20:54 | ERROR    | app.services.jobs.job_service:66 | Default board scraping failed: cannot access local variable 'sites' where it is not associated with a value
+2026-04-05 19:21:47 | ERROR    | app.services.jobs.job_service:66 | Default board scraping failed: cannot access local variable 'sites' where it is not associated with a value
+2026-04-05 19:22:30 | ERROR    | app.services.jobs.job_service:66 | Default board scraping failed: cannot access local variable 'sites' where it is not associated with a value
+2026-04-05 19:38:33 | ERROR    | app.services.jobs.job_service:66 | Default board scraping failed: cannot access local variable 'sites' where it is not associated with a value
+2026-04-05 19:38:41 | ERROR    | app.services.jobs.job_service:66 | Default board scraping failed: cannot access local variable 'sites' where it is not associated with a value
+2026-04-05 19:39:21 | ERROR    | app.services.jobs.job_service:66 | Default board scraping failed: cannot access local variable 'sites' where it is not associated with a value

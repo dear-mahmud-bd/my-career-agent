@@ -5,17 +5,197 @@
 {% block page_subtitle %}Overview of your job search activity{% endblock %}
 
 {% block header_actions %}
-<form method="post" action="/api/v1/jobs/trigger-scrape">
-    <button type="submit"
-            class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700
-                   text-white text-sm font-medium px-4 py-2 rounded-lg transition-all shadow-sm">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+<div class="flex items-center gap-3">
+
+    <!-- Continuous scan toggle -->
+    <div class="flex items-center gap-2 bg-gray-50 border
+                border-gray-200 rounded-lg px-3 py-2">
+        <div id="loop-indicator"
+             class="w-2 h-2 rounded-full bg-gray-300">
+        </div>
+        <span id="loop-label"
+              class="text-xs text-gray-500 font-medium">
+            Auto: Off
+        </span>
+        <button id="loop-toggle"
+                onclick="toggleLoop()"
+                class="text-xs px-2 py-1 rounded font-medium
+                       bg-gray-200 hover:bg-gray-300
+                       text-gray-600 transition-all ml-1">
+            Start
+        </button>
+    </div>
+
+    <!-- Manual scan button -->
+    <button id="scan-btn"
+            onclick="triggerScan()"
+            class="flex items-center gap-2 bg-indigo-600
+                   hover:bg-indigo-700 text-white text-sm
+                   font-medium px-4 py-2 rounded-lg
+                   transition-all shadow-sm">
+        <svg id="scan-icon" class="w-4 h-4" fill="none"
+             stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
                   d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
         </svg>
-        Scan Jobs Now
+        <span id="scan-text">Scan Now</span>
     </button>
-</form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let scanPolling = null;
+let statusPolling = null;
+
+// ── Start polling status on load ──
+window.addEventListener('load', () => {
+    statusPolling = setInterval(updateStatus, 5000);
+    updateStatus();
+});
+
+async function updateStatus() {
+    try {
+        const res  = await fetch('/api/v1/jobs/scan-status');
+        const data = await res.json();
+
+        // Update loop indicator
+        const indicator = document.getElementById('loop-indicator');
+        const loopLabel = document.getElementById('loop-label');
+        const loopBtn   = document.getElementById('loop-toggle');
+
+        if (data.is_running) {
+            indicator.className = 'w-2 h-2 rounded-full bg-green-400 animate-pulse';
+            loopLabel.textContent = `Auto: ON (#${data.scan_count})`;
+            loopBtn.textContent = 'Stop';
+            loopBtn.className = 'text-xs px-2 py-1 rounded font-medium bg-red-100 hover:bg-red-200 text-red-600 transition-all ml-1';
+        } else {
+            indicator.className = 'w-2 h-2 rounded-full bg-gray-300';
+            loopLabel.textContent = 'Auto: Off';
+            loopBtn.textContent = 'Start';
+            loopBtn.className = 'text-xs px-2 py-1 rounded font-medium bg-gray-200 hover:bg-gray-300 text-gray-600 transition-all ml-1';
+        }
+
+        // Update scan button
+        const scanBtn  = document.getElementById('scan-btn');
+        const scanIcon = document.getElementById('scan-icon');
+        const scanText = document.getElementById('scan-text');
+
+        if (data.is_scanning) {
+            scanBtn.disabled = true;
+            scanBtn.classList.add('opacity-75');
+            scanText.textContent = 'Scanning...';
+            scanIcon.classList.add('animate-spin');
+        } else {
+            scanBtn.disabled = false;
+            scanBtn.classList.remove('opacity-75');
+            scanText.textContent = 'Scan Now';
+            scanIcon.classList.remove('animate-spin');
+        }
+
+        // Show next scan time
+        if (data.next_scan_at && data.is_running && !data.is_scanning) {
+            const next = new Date(data.next_scan_at);
+            const now  = new Date();
+            const diff = Math.round((next - now) / 60000);
+            if (diff > 0) {
+                loopLabel.textContent =
+                    `Auto: ON — next in ${diff}m`;
+            }
+        }
+
+    } catch(e) {}
+}
+
+async function toggleLoop() {
+    const btn = document.getElementById('loop-toggle');
+    const isRunning = btn.textContent.trim() === 'Stop';
+
+    try {
+        const url = isRunning
+            ? '/api/v1/jobs/scan/stop'
+            : '/api/v1/jobs/scan/start';
+
+        const res  = await fetch(url, { method: 'POST' });
+        const data = await res.json();
+
+        showToast(
+            data.message,
+            data.success ? 'success' : 'error'
+        );
+        await updateStatus();
+
+    } catch(e) {
+        showToast('Failed to toggle scan loop', 'error');
+    }
+}
+
+async function triggerScan() {
+    const scanBtn  = document.getElementById('scan-btn');
+    const scanIcon = document.getElementById('scan-icon');
+    const scanText = document.getElementById('scan-text');
+
+    scanBtn.disabled = true;
+    scanText.textContent = 'Scanning...';
+    scanIcon.classList.add('animate-spin');
+
+    try {
+        const res  = await fetch('/api/v1/jobs/trigger-scrape', {
+            method: 'POST',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        });
+        const data = await res.json();
+
+        if (data.success) {
+            showToast(
+                '🔍 Scan started — check Telegram!',
+                'success'
+            );
+        } else {
+            showToast(data.message || 'Could not start scan', 'error');
+            scanBtn.disabled = false;
+            scanText.textContent = 'Scan Now';
+            scanIcon.classList.remove('animate-spin');
+        }
+
+    } catch(e) {
+        showToast('Server error. Try again.', 'error');
+        scanBtn.disabled = false;
+        scanText.textContent = 'Scan Now';
+        scanIcon.classList.remove('animate-spin');
+    }
+}
+
+function showToast(message, type = 'success') {
+    const existing = document.getElementById('toast');
+    if (existing) existing.remove();
+
+    const colors = {
+        success : 'bg-green-600',
+        error   : 'bg-red-600',
+        info    : 'bg-indigo-600',
+    };
+
+    const toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.className = [
+        'fixed bottom-5 right-5 z-50',
+        colors[type] || colors.info,
+        'text-white text-sm font-medium',
+        'px-5 py-3 rounded-xl shadow-xl',
+        'transition-all duration-300',
+    ].join(' ');
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 400);
+    }, 5000);
+}
+</script>
 {% endblock %}
 
 {% block content %}

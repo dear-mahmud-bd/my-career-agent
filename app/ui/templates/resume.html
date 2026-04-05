@@ -30,25 +30,73 @@
             </p>
         </div>
         <form method="post" action="/api/v1/resume/upload"
-              enctype="multipart/form-data" class="px-5 py-4">
+            enctype="multipart/form-data"
+            class="px-5 py-4"
+            id="upload-form"
+            onsubmit="return validateUpload()">
+
+            <!-- Drop zone -->
             <div class="border-2 border-dashed border-gray-200 rounded-xl p-8
                         text-center hover:border-indigo-300 transition-all cursor-pointer"
-                 onclick="document.getElementById('cv-upload').click()">
-                <svg class="w-10 h-10 text-gray-300 mx-auto mb-3" fill="none"
-                     stroke="currentColor" viewBox="0 0 24 24">
+                id="drop-zone"
+                onclick="document.getElementById('cv-upload').click()"
+                ondragover="handleDragOver(event)"
+                ondragleave="handleDragLeave(event)"
+                ondrop="handleDrop(event)">
+
+                <svg class="w-10 h-10 text-gray-300 mx-auto mb-3"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                 </svg>
-                <p class="text-sm text-gray-500">Click to upload PDF</p>
-                <p class="text-xs text-gray-400 mt-1">PDF only, max 10MB</p>
-                <input type="file" id="cv-upload" name="file"
-                       accept=".pdf" class="hidden"
-                       onchange="document.getElementById('upload-name').textContent = this.files[0]?.name"/>
+
+                <p class="text-sm text-gray-500" id="drop-text">
+                    Click to upload or drag & drop
+                </p>
+                <p class="text-xs text-gray-400 mt-1">PDF only · Max 10MB</p>
+
+                <input type="file"
+                    id="cv-upload"
+                    name="file"
+                    accept=".pdf,application/pdf"
+                    class="hidden"
+                    onchange="handleFileSelect(this)"/>
             </div>
-            <p id="upload-name" class="text-xs text-indigo-600 mt-2 text-center"></p>
+
+            <!-- File preview -->
+            <div id="file-preview" class="hidden mt-3 px-3 py-2 bg-indigo-50
+                                        border border-indigo-100 rounded-lg
+                                        flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-indigo-500" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    <span id="file-name"
+                        class="text-xs font-medium text-indigo-700"></span>
+                    <span id="file-size"
+                        class="text-xs text-indigo-400"></span>
+                </div>
+                <button type="button"
+                        onclick="clearFile()"
+                        class="text-indigo-300 hover:text-indigo-500 text-lg leading-none">
+                    ×
+                </button>
+            </div>
+
+            <!-- Validation error -->
+            <div id="upload-error"
+                class="hidden mt-2 text-xs text-red-500 font-medium px-1">
+            </div>
+
+            <!-- Submit -->
             <button type="submit"
-                    class="w-full mt-3 bg-gray-800 hover:bg-gray-900 text-white
-                           text-sm font-medium py-2.5 rounded-lg transition-all">
+                    id="upload-btn"
+                    class="w-full mt-4 bg-gray-800 hover:bg-gray-900 text-white
+                        text-sm font-medium py-2.5 rounded-lg transition-all
+                        disabled:opacity-40 disabled:cursor-not-allowed">
                 Upload & Extract Skills
             </button>
         </form>
@@ -105,4 +153,129 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+
+function showError(msg) {
+    const el = document.getElementById('upload-error');
+    el.textContent = msg;
+    el.classList.remove('hidden');
+    document.getElementById('upload-btn').disabled = true;
+}
+
+function clearError() {
+    const el = document.getElementById('upload-error');
+    el.textContent = '';
+    el.classList.add('hidden');
+    document.getElementById('upload-btn').disabled = false;
+}
+
+function showPreview(file) {
+    document.getElementById('file-name').textContent = file.name;
+    document.getElementById('file-size').textContent =
+        `(${(file.size / 1024).toFixed(1)} KB)`;
+    document.getElementById('file-preview').classList.remove('hidden');
+    document.getElementById('drop-text').textContent = 'File selected';
+}
+
+function clearFile() {
+    document.getElementById('cv-upload').value = '';
+    document.getElementById('file-preview').classList.add('hidden');
+    document.getElementById('drop-text').textContent =
+        'Click to upload or drag & drop';
+    clearError();
+}
+
+function validateFile(file) {
+    clearError();
+
+    if (!file) {
+        showError('Please select a file.');
+        return false;
+    }
+
+    if (!file.name.toLowerCase().endsWith('.pdf')) {
+        showError('Only PDF files are allowed.');
+        return false;
+    }
+
+    if (file.size === 0) {
+        showError('The selected file is empty.');
+        return false;
+    }
+
+    if (file.size > MAX_SIZE) {
+        showError(
+            `File is too large (${(file.size/1024/1024).toFixed(1)}MB). Max is 10MB.`
+        );
+        return false;
+    }
+
+    return true;
+}
+
+function handleFileSelect(input) {
+    const file = input.files[0];
+    if (!file) return;
+    if (validateFile(file)) {
+        showPreview(file);
+    } else {
+        input.value = '';
+        document.getElementById('file-preview').classList.add('hidden');
+    }
+}
+
+function validateUpload() {
+    const input = document.getElementById('cv-upload');
+    const file = input.files[0];
+
+    if (!file) {
+        showError('Please select a PDF file first.');
+        return false;
+    }
+
+    return validateFile(file);
+}
+
+// ── Drag & drop ──
+function handleDragOver(e) {
+    e.preventDefault();
+    document.getElementById('drop-zone').classList.add(
+        'border-indigo-400', 'bg-indigo-50'
+    );
+}
+
+function handleDragLeave(e) {
+    document.getElementById('drop-zone').classList.remove(
+        'border-indigo-400', 'bg-indigo-50'
+    );
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    handleDragLeave(e);
+
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+
+    const input = document.getElementById('cv-upload');
+    const dt = new DataTransfer();
+    dt.items.add(file);
+    input.files = dt.files;
+
+    if (validateFile(file)) {
+        showPreview(file);
+    }
+}
+
+// ── Loading state on submit ──
+document.getElementById('upload-form').addEventListener('submit', function() {
+    const btn = document.getElementById('upload-btn');
+    btn.textContent = 'Uploading...';
+    btn.disabled = true;
+});
+</script>
 {% endblock %}

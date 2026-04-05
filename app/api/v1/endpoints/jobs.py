@@ -1,5 +1,6 @@
+from datetime import datetime
 from fastapi import APIRouter, Request, Depends
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, desc
@@ -7,7 +8,7 @@ from app.db.database import get_db
 from app.models.job import Job, JobMatch
 from app.core.security import check_auth
 from app.services.llm import llm_router
-from app.workers.tasks import scrape_and_match_jobs
+from app.core.logger import logger
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/ui/templates")
@@ -60,14 +61,76 @@ async def jobs_page(
     )
 
 
+@router.get("/api/v1/jobs/scan-status")
+async def scan_status(request: Request):
+    if not check_auth(request):
+        return JSONResponse(
+            {"error": "unauthorized"}, status_code=401
+        )
+    from app.core.scan_manager import scan_manager
+    return JSONResponse(scan_manager.get_status())
+
+
 @router.post("/api/v1/jobs/trigger-scrape")
 async def trigger_scrape(request: Request):
     if not check_auth(request):
-        return RedirectResponse(url="/login")
+        return JSONResponse(
+            {"error": "unauthorized"}, status_code=401
+        )
 
-    scrape_and_match_jobs.delay()
+    from app.core.scan_manager import scan_manager
+    import asyncio
 
-    return RedirectResponse(
-        url="/dashboard?message=Job+scan+started&message_type=success",
-        status_code=303,
-    )
+    if scan_manager.is_scanning:
+        return JSONResponse({
+            "success": False,
+            "message": "Scan already in progress"
+        })
+
+    # Run single scan immediately in background
+    asyncio.create_task(scan_manager.run_once())
+
+    return JSONResponse({
+        "success": True,
+        "message": "Scan started"
+    })
+
+
+@router.post("/api/v1/jobs/scan/start")
+async def start_continuous_scan(request: Request):
+    """Start the continuous scan loop."""
+    if not check_auth(request):
+        return JSONResponse(
+            {"error": "unauthorized"}, status_code=401
+        )
+
+    from app.core.scan_manager import scan_manager
+
+    if scan_manager.is_running:
+        return JSONResponse({
+            "success": False,
+            "message": "Scan loop already running"
+        })
+
+    scan_manager.start()
+    return JSONResponse({
+        "success": True,
+        "message": "Continuous scan started"
+    })
+
+
+@router.post("/api/v1/jobs/scan/stop")
+async def stop_continuous_scan(request: Request):
+    """Stop the continuous scan loop."""
+    if not check_auth(request):
+        return JSONResponse(
+            {"error": "unauthorized"}, status_code=401
+        )
+
+    from app.core.scan_manager import scan_manager
+    scan_manager.stop()
+
+    return JSONResponse({
+        "success": True,
+        "message": "Scan loop stopped"
+    })

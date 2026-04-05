@@ -8,24 +8,22 @@ class Settings(BaseSettings):
     # ─────────────────────────────
     # App
     # ─────────────────────────────
-    app_name: str = Field(default="Career Agent")
-    app_env: str = Field(default="development")
+    app_name: str = Field(default="")
+    app_env: str = Field(default="")
     debug: bool = Field(default=True)
-    secret_key: str = Field(default="change_this_to_a_random_secret_string")
-    ui_username: str = Field(default="admin")
-    ui_password: str = Field(default="changeme")
+    secret_key: str = Field(default="")
+    ui_username: str = Field(default="")
+    ui_password: str = Field(default="chageme")
 
     # ─────────────────────────────
     # Database
     # ─────────────────────────────
-    database_url: str = Field(
-        default="sqlite+aiosqlite:///./data/career_agent.db"
-    )
+    database_url: str = Field(default="")
 
     # ─────────────────────────────
     # Redis
     # ─────────────────────────────
-    redis_url: str = Field(default="redis://localhost:6379/0")
+    redis_url: str = Field(default="")
 
     # ─────────────────────────────
     # Telegram
@@ -36,23 +34,27 @@ class Settings(BaseSettings):
     # ─────────────────────────────
     # LLM
     # ─────────────────────────────
-    llm_provider: str = Field(default="auto")
+    llm_provider: str = Field(default="")
     groq_api_key: str = Field(default="")
-    groq_model: str = Field(default="llama-3.3-70b-versatile")
-    ollama_base_url: str = Field(default="http://localhost:11434")
-    ollama_model: str = Field(default="mistral")
+    groq_model: str = Field(default="")
+    ollama_base_url: str = Field(default="")
+    ollama_model: str = Field(default="")
 
     # ─────────────────────────────
     # Job Scraping
     # ─────────────────────────────
-    job_scrape_interval_hours: int = Field(default=24)
-    job_match_threshold: int = Field(default=65)
-    job_sites: str = Field(default="linkedin,indeed,glassdoor,zip_recruiter")
+    job_scrape_interval_hours: int = Field(default=0)
+    job_match_threshold: int = Field(default=0)
+    job_sites: str = Field(default="")
+
+    @property
+    def job_sites_list(self) -> list[str]:
+        return [s.strip() for s in self.job_sites.split(",") if s.strip()]
 
     # ─────────────────────────────
     # Skill Update
     # ─────────────────────────────
-    skill_update_interval_days: int = Field(default=12)
+    skill_update_interval_days: int = Field(default=0)
 
     # ─────────────────────────────
     # CV

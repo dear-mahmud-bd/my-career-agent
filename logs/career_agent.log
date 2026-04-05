@@ -60,3 +60,286 @@
 2026-04-05 02:00:12 | INFO     | __main__:23 | Total routes : 26
 2026-04-05 02:00:12 | INFO     | __main__:24 | Routes: /openapi.json, /docs, /docs/oauth2-redirect, /redoc, /static, /login, /login, /logout, /, /dashboard, /profile, /api/v1/profile/update, /api/v1/profile/skills/add, /api/v1/profile/skills/{skill_id}/delete, /api/v1/profile/preferences/update, /jobs, /api/v1/jobs/trigger-scrape, /sources, /api/v1/sources/add, /api/v1/sources/{source_id}/toggle, /api/v1/sources/{source_id}/delete, /resume, /api/v1/resume/generate, /api/v1/resume/upload, /api/v1/resume/{resume_id}/download, /health
 2026-04-05 02:00:12 | SUCCESS  | __main__:25 | main.py OK ✅
+2026-04-05 02:02:43 | INFO     | app.workers.celery_app:71 | Celery app configured ✅
+2026-04-05 02:02:43 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 02:02:44 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 02:02:44 | SUCCESS  | app.main:22 | Database ready ✅
+2026-04-05 02:03:42 | INFO     | app.main:80 | User 'admin' logged in
+2026-04-05 02:17:48 | INFO     | app.services.resume.parser:21 | Parsed PDF: 2952 chars from 1 pages
+2026-04-05 02:18:04 | INFO     | app.services.resume.generator:24 | Starting CV generation...
+2026-04-05 02:18:05 | ERROR    | app.services.resume.generator:29 | No profile found. Please create your profile from the UI.
+2026-04-05 02:33:00 | INFO     | app.main:24 | Shutting down...
+2026-04-05 02:33:06 | INFO     | app.workers.celery_app:71 | Celery app configured ✅
+2026-04-05 02:33:06 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 02:33:06 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 02:33:06 | SUCCESS  | app.main:22 | Database ready ✅
+2026-04-05 02:36:42 | INFO     | app.main:24 | Shutting down...
+2026-04-05 02:36:44 | INFO     | app.workers.celery_app:71 | Celery app configured ✅
+2026-04-05 02:36:44 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 02:36:44 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 02:36:44 | SUCCESS  | app.main:22 | Database ready ✅
+2026-04-05 02:36:47 | INFO     | app.main:24 | Shutting down...
+2026-04-05 02:36:49 | INFO     | app.workers.celery_app:71 | Celery app configured ✅
+2026-04-05 02:36:49 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 02:36:49 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 02:36:49 | SUCCESS  | app.main:22 | Database ready ✅
+2026-04-05 02:36:50 | INFO     | __main__:18 | Route: /resume
+2026-04-05 02:36:50 | INFO     | __main__:18 | Route: /api/v1/resume/generate
+2026-04-05 02:36:50 | INFO     | __main__:18 | Route: /api/v1/resume/upload
+2026-04-05 02:36:50 | INFO     | __main__:18 | Route: /api/v1/resume/{resume_id}/download
+2026-04-05 02:36:50 | SUCCESS  | __main__:19 | Resume endpoint with validation OK ✅
+2026-04-05 02:37:29 | INFO     | app.main:24 | Shutting down...
+2026-04-05 02:43:32 | INFO     | app.workers.celery_app:71 | Celery app configured ✅
+2026-04-05 02:43:33 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 02:43:33 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 02:43:33 | SUCCESS  | app.main:22 | Database ready ✅
+2026-04-05 03:03:42 | INFO     | app.main:24 | Shutting down...
+2026-04-05 14:08:12 | INFO     | __main__:38 | Job sites list  : ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 14:08:12 | INFO     | __main__:39 | Match threshold : 65
+2026-04-05 14:08:12 | INFO     | __main__:40 | Log file created: True → logs/job_results/2026-04-05.log
+2026-04-05 14:08:12 | SUCCESS  | __main__:41 | All updates verified OK ✅
+2026-04-05 14:14:07 | INFO     | app.workers.celery_app:71 | Celery app configured ✅
+2026-04-05 14:14:08 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 14:14:08 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 14:14:08 | SUCCESS  | app.main:22 | Database ready ✅
+2026-04-05 14:14:39 | INFO     | app.main:80 | User 'admin' logged in
+2026-04-05 14:22:51 | INFO     | app.main:24 | Shutting down...
+2026-04-05 14:25:28 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 14:25:28 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 14:25:28 | SUCCESS  | app.main:22 | Database ready ✅
+2026-04-05 14:25:53 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Can't parse entities: can't find end of the entity starting at byte offset 285
+2026-04-05 14:25:53 | INFO     | app.services.jobs.job_service:27 | Starting job scraping run...
+2026-04-05 14:25:53 | INFO     | app.services.jobs.job_service:52 | Scraping default boards: ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 14:25:53 | INFO     | app.services.jobs.sources.jobspy_scraper:33 | Scraping 'Software Developer' from ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 14:25:53 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Software Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 14:25:53 | INFO     | app.services.jobs.sources.jobspy_scraper:33 | Scraping 'Backend Developer' from ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 14:25:53 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Backend Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 14:25:53 | INFO     | app.services.jobs.sources.jobspy_scraper:33 | Scraping 'Python Developer' from ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 14:25:53 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Python Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 14:25:53 | INFO     | app.services.jobs.sources.jobspy_scraper:62 | Total jobs scraped via JobSpy: 0
+2026-04-05 14:25:53 | INFO     | app.services.jobs.job_service:62 | Default boards: 0 jobs found
+2026-04-05 14:25:53 | SUCCESS  | app.services.jobs.job_service:107 | Scraping done. Scraped: 0, New: 0
+2026-04-05 14:25:53 | INFO     | app.services.matching.matcher:58 | Starting skill matching run...
+2026-04-05 14:25:53 | INFO     | app.services.matching.matcher:74 | No new jobs to match.
+2026-04-05 14:25:54 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Chat not found
+2026-04-05 14:25:54 | SUCCESS  | app.api.v1.endpoints.jobs:157 | Background scan done: {'new_jobs_scraped': 0, 'jobs_matched': 0}
+2026-04-05 14:26:29 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Can't parse entities: can't find end of the entity starting at byte offset 285
+2026-04-05 14:26:29 | INFO     | app.services.jobs.job_service:27 | Starting job scraping run...
+2026-04-05 14:26:29 | INFO     | app.services.jobs.job_service:52 | Scraping default boards: ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 14:26:29 | INFO     | app.services.jobs.sources.jobspy_scraper:33 | Scraping 'Software Developer' from ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 14:26:29 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Software Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 14:26:29 | INFO     | app.services.jobs.sources.jobspy_scraper:33 | Scraping 'Backend Developer' from ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 14:26:29 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Backend Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 14:26:29 | INFO     | app.services.jobs.sources.jobspy_scraper:33 | Scraping 'Python Developer' from ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 14:26:29 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Python Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 14:26:29 | INFO     | app.services.jobs.sources.jobspy_scraper:62 | Total jobs scraped via JobSpy: 0
+2026-04-05 14:26:29 | INFO     | app.services.jobs.job_service:62 | Default boards: 0 jobs found
+2026-04-05 14:26:29 | SUCCESS  | app.services.jobs.job_service:107 | Scraping done. Scraped: 0, New: 0
+2026-04-05 14:26:29 | INFO     | app.services.matching.matcher:58 | Starting skill matching run...
+2026-04-05 14:26:30 | INFO     | app.services.matching.matcher:74 | No new jobs to match.
+2026-04-05 14:26:30 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Chat not found
+2026-04-05 14:26:30 | SUCCESS  | app.api.v1.endpoints.jobs:157 | Background scan done: {'new_jobs_scraped': 0, 'jobs_matched': 0}
+2026-04-05 14:32:21 | INFO     | app.main:24 | Shutting down...
+2026-04-05 14:32:24 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 14:32:24 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 14:32:24 | SUCCESS  | app.main:22 | Database ready ✅
+2026-04-05 14:32:33 | INFO     | app.main:24 | Shutting down...
+2026-04-05 14:32:35 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 14:32:35 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 14:32:35 | SUCCESS  | app.main:22 | Database ready ✅
+2026-04-05 14:32:37 | INFO     | app.main:24 | Shutting down...
+2026-04-05 14:32:39 | INFO     | __main__:8 | Token : 8785297662:AAFwnyyeO...
+2026-04-05 14:32:39 | INFO     | __main__:9 | Chat ID: 1642022418
+2026-04-05 14:32:40 | INFO     | __main__:13 | Bot available: True
+2026-04-05 14:32:41 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Chat not found
+2026-04-05 14:32:41 | INFO     | __main__:17 | Message sent: False
+2026-04-05 14:36:36 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Chat not found
+2026-04-05 15:33:58 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: httpx.ConnectError: [Errno -3] Temporary failure in name resolution
+2026-04-05 15:34:51 | INFO     | __main__:19 | Token : 8785297662:AAFwnyyeO...
+2026-04-05 15:34:51 | INFO     | __main__:20 | Chat ID: 1642022418
+2026-04-05 15:34:51 | WARNING  | app.services.notifications.telegram:31 | Telegram not available: httpx.ConnectError: [Errno -3] Temporary failure in name resolution
+2026-04-05 15:34:51 | INFO     | __main__:24 | Bot available: False
+2026-04-05 15:34:51 | ERROR    | __main__:30 | Bot not available — check token and chat ID
+2026-04-05 15:45:09 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Chat not found
+2026-04-05 18:59:47 | INFO     | __main__:9 | Token : 8785297662:AAFwnyyeO...
+2026-04-05 18:59:47 | INFO     | __main__:10 | Chat ID: 1642022418
+2026-04-05 18:59:48 | INFO     | __main__:14 | Bot available: True
+2026-04-05 18:59:48 | INFO     | __main__:18 | Message sent: True
+2026-04-05 19:03:23 | INFO     | __main__:9 | ScanManager is_running : False
+2026-04-05 19:03:23 | INFO     | __main__:10 | ScanManager is_scanning: False
+2026-04-05 19:03:23 | INFO     | __main__:11 | ScanManager scan_count : 0
+2026-04-05 19:03:23 | SUCCESS  | __main__:12 | ScanManager OK ✅
+2026-04-05 19:11:01 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 19:11:01 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 19:11:01 | SUCCESS  | app.main:24 | Database ready ✅
+2026-04-05 19:11:01 | SUCCESS  | app.core.scan_manager:44 | Scan manager started ✅
+2026-04-05 19:11:01 | SUCCESS  | app.main:29 | Scan manager started ✅
+2026-04-05 19:11:01 | INFO     | app.core.scan_manager:66 | Scan loop started. Interval: every 24h
+2026-04-05 19:11:04 | INFO     | app.core.scan_manager:109 | Starting scan #1...
+2026-04-05 19:11:05 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Can't parse entities: can't find end of the entity starting at byte offset 272
+2026-04-05 19:11:05 | INFO     | app.services.jobs.job_service:27 | Starting job scraping run...
+2026-04-05 19:11:05 | INFO     | app.services.jobs.job_service:52 | Scraping default boards: ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 19:11:05 | INFO     | app.services.jobs.sources.jobspy_scraper:33 | Scraping 'Software Developer' from ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 19:11:05 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Software Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 19:11:05 | INFO     | app.services.jobs.sources.jobspy_scraper:33 | Scraping 'Backend Developer' from ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 19:11:05 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Backend Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 19:11:05 | INFO     | app.services.jobs.sources.jobspy_scraper:33 | Scraping 'Python Developer' from ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 19:11:05 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Python Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 19:11:05 | INFO     | app.services.jobs.sources.jobspy_scraper:62 | Total jobs scraped via JobSpy: 0
+2026-04-05 19:11:05 | INFO     | app.services.jobs.job_service:62 | Default boards: 0 jobs found
+2026-04-05 19:11:05 | SUCCESS  | app.services.jobs.job_service:107 | Scraping done. Scraped: 0, New: 0
+2026-04-05 19:11:05 | INFO     | app.services.matching.matcher:58 | Starting skill matching run...
+2026-04-05 19:11:05 | INFO     | app.services.matching.matcher:74 | No new jobs to match.
+2026-04-05 19:11:06 | SUCCESS  | app.core.scan_manager:163 | Scan #1 done — new: 0, matched: 0, duration: 1s
+2026-04-05 19:11:06 | INFO     | app.core.scan_manager:86 | Next scan at: 2026-04-06 19:11
+2026-04-05 19:11:49 | INFO     | app.main:34 | Shutting down...
+2026-04-05 19:11:49 | INFO     | app.core.scan_manager:51 | Scan manager stopped
+2026-04-05 19:13:53 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 19:13:53 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 19:13:53 | SUCCESS  | app.main:24 | Database ready ✅
+2026-04-05 19:13:53 | SUCCESS  | app.core.scan_manager:44 | Scan manager started ✅
+2026-04-05 19:13:53 | SUCCESS  | app.main:29 | Scan manager started ✅
+2026-04-05 19:13:53 | INFO     | app.core.scan_manager:66 | Scan loop started. Interval: every 24h
+2026-04-05 19:13:54 | INFO     | app.core.scan_manager:109 | Starting scan #1...
+2026-04-05 19:13:55 | ERROR    | app.services.notifications.telegram:46 | Telegram send failed: Can't parse entities: can't find end of the entity starting at byte offset 272
+2026-04-05 19:13:55 | INFO     | app.services.jobs.job_service:27 | Starting job scraping run...
+2026-04-05 19:13:55 | INFO     | app.services.jobs.job_service:52 | Scraping default boards: ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 19:13:55 | INFO     | app.services.jobs.sources.jobspy_scraper:33 | Scraping 'Software Developer' from ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 19:13:55 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Software Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 19:13:55 | INFO     | app.services.jobs.sources.jobspy_scraper:33 | Scraping 'Backend Developer' from ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 19:13:55 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Backend Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 19:13:55 | INFO     | app.services.jobs.sources.jobspy_scraper:33 | Scraping 'Python Developer' from ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 19:13:55 | ERROR    | app.services.jobs.sources.jobspy_scraper:59 | JobSpy scraping failed for 'Python Developer': 1 validation error for ScraperInput
+is_remote
+  Input should be a valid boolean [type=bool_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.8/v/bool_type
+2026-04-05 19:13:55 | INFO     | app.services.jobs.sources.jobspy_scraper:62 | Total jobs scraped via JobSpy: 0
+2026-04-05 19:13:55 | INFO     | app.services.jobs.job_service:62 | Default boards: 0 jobs found
+2026-04-05 19:13:55 | SUCCESS  | app.services.jobs.job_service:107 | Scraping done. Scraped: 0, New: 0
+2026-04-05 19:13:55 | INFO     | app.services.matching.matcher:58 | Starting skill matching run...
+2026-04-05 19:13:55 | INFO     | app.services.matching.matcher:74 | No new jobs to match.
+2026-04-05 19:13:56 | SUCCESS  | app.core.scan_manager:163 | Scan #1 done — new: 0, matched: 0, duration: 1s
+2026-04-05 19:13:56 | INFO     | app.core.scan_manager:86 | Next scan at: 2026-04-06 19:13
+2026-04-05 19:14:26 | INFO     | app.main:34 | Shutting down...
+2026-04-05 19:14:26 | INFO     | app.core.scan_manager:51 | Scan manager stopped
+2026-04-05 19:20:51 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 19:20:51 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 19:20:51 | SUCCESS  | app.main:24 | Database ready ✅
+2026-04-05 19:20:51 | SUCCESS  | app.core.scan_manager:44 | Scan manager started ✅
+2026-04-05 19:20:51 | SUCCESS  | app.main:29 | Scan manager started ✅
+2026-04-05 19:20:51 | INFO     | app.core.scan_manager:66 | Scan loop started. Interval: every 24h
+2026-04-05 19:20:53 | INFO     | app.core.scan_manager:109 | Starting scan #1...
+2026-04-05 19:20:54 | INFO     | app.services.jobs.job_service:27 | Starting job scraping run...
+2026-04-05 19:20:54 | INFO     | app.services.jobs.job_service:52 | Scraping default boards: ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 19:20:54 | ERROR    | app.services.jobs.job_service:66 | Default board scraping failed: cannot access local variable 'sites' where it is not associated with a value
+2026-04-05 19:20:54 | SUCCESS  | app.services.jobs.job_service:107 | Scraping done. Scraped: 0, New: 0
+2026-04-05 19:20:54 | INFO     | app.services.matching.matcher:58 | Starting skill matching run...
+2026-04-05 19:20:54 | INFO     | app.services.matching.matcher:74 | No new jobs to match.
+2026-04-05 19:20:54 | SUCCESS  | app.core.scan_manager:163 | Scan #1 done — new: 0, matched: 0, duration: 1s
+2026-04-05 19:20:54 | INFO     | app.core.scan_manager:86 | Next scan at: 2026-04-06 19:20
+2026-04-05 19:21:41 | INFO     | app.main:34 | Shutting down...
+2026-04-05 19:21:41 | INFO     | app.core.scan_manager:51 | Scan manager stopped
+2026-04-05 19:21:44 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 19:21:44 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 19:21:44 | SUCCESS  | app.main:24 | Database ready ✅
+2026-04-05 19:21:44 | SUCCESS  | app.core.scan_manager:44 | Scan manager started ✅
+2026-04-05 19:21:44 | SUCCESS  | app.main:29 | Scan manager started ✅
+2026-04-05 19:21:44 | INFO     | app.core.scan_manager:66 | Scan loop started. Interval: every 24h
+2026-04-05 19:21:45 | INFO     | app.core.scan_manager:109 | Starting scan #1...
+2026-04-05 19:21:47 | INFO     | app.services.jobs.job_service:27 | Starting job scraping run...
+2026-04-05 19:21:47 | INFO     | app.services.jobs.job_service:52 | Scraping default boards: ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 19:21:47 | ERROR    | app.services.jobs.job_service:66 | Default board scraping failed: cannot access local variable 'sites' where it is not associated with a value
+2026-04-05 19:21:47 | SUCCESS  | app.services.jobs.job_service:107 | Scraping done. Scraped: 0, New: 0
+2026-04-05 19:21:47 | INFO     | app.services.matching.matcher:58 | Starting skill matching run...
+2026-04-05 19:21:47 | INFO     | app.services.matching.matcher:74 | No new jobs to match.
+2026-04-05 19:21:47 | SUCCESS  | app.core.scan_manager:163 | Scan #1 done — new: 0, matched: 0, duration: 1s
+2026-04-05 19:21:47 | INFO     | app.core.scan_manager:86 | Next scan at: 2026-04-06 19:21
+2026-04-05 19:22:26 | INFO     | app.main:34 | Shutting down...
+2026-04-05 19:22:26 | INFO     | app.core.scan_manager:51 | Scan manager stopped
+2026-04-05 19:22:28 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 19:22:28 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 19:22:28 | SUCCESS  | app.main:24 | Database ready ✅
+2026-04-05 19:22:28 | SUCCESS  | app.core.scan_manager:44 | Scan manager started ✅
+2026-04-05 19:22:28 | SUCCESS  | app.main:29 | Scan manager started ✅
+2026-04-05 19:22:28 | INFO     | app.core.scan_manager:66 | Scan loop started. Interval: every 24h
+2026-04-05 19:22:29 | INFO     | app.core.scan_manager:109 | Starting scan #1...
+2026-04-05 19:22:30 | INFO     | app.services.jobs.job_service:27 | Starting job scraping run...
+2026-04-05 19:22:30 | INFO     | app.services.jobs.job_service:52 | Scraping default boards: ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 19:22:30 | ERROR    | app.services.jobs.job_service:66 | Default board scraping failed: cannot access local variable 'sites' where it is not associated with a value
+2026-04-05 19:22:30 | SUCCESS  | app.services.jobs.job_service:107 | Scraping done. Scraped: 0, New: 0
+2026-04-05 19:22:30 | INFO     | app.services.matching.matcher:58 | Starting skill matching run...
+2026-04-05 19:22:31 | INFO     | app.services.matching.matcher:74 | No new jobs to match.
+2026-04-05 19:22:31 | SUCCESS  | app.core.scan_manager:163 | Scan #1 done — new: 0, matched: 0, duration: 1s
+2026-04-05 19:22:31 | INFO     | app.core.scan_manager:86 | Next scan at: 2026-04-06 19:22
+2026-04-05 19:38:26 | INFO     | app.core.scan_manager:51 | Scan manager stopped
+2026-04-05 19:38:32 | INFO     | app.core.scan_manager:109 | Starting scan #2...
+2026-04-05 19:38:33 | INFO     | app.services.jobs.job_service:27 | Starting job scraping run...
+2026-04-05 19:38:33 | INFO     | app.services.jobs.job_service:52 | Scraping default boards: ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 19:38:33 | ERROR    | app.services.jobs.job_service:66 | Default board scraping failed: cannot access local variable 'sites' where it is not associated with a value
+2026-04-05 19:38:33 | SUCCESS  | app.services.jobs.job_service:107 | Scraping done. Scraped: 0, New: 0
+2026-04-05 19:38:33 | INFO     | app.services.matching.matcher:58 | Starting skill matching run...
+2026-04-05 19:38:33 | INFO     | app.services.matching.matcher:74 | No new jobs to match.
+2026-04-05 19:38:34 | SUCCESS  | app.core.scan_manager:163 | Scan #2 done — new: 0, matched: 0, duration: 1s
+2026-04-05 19:38:40 | SUCCESS  | app.core.scan_manager:44 | Scan manager started ✅
+2026-04-05 19:38:40 | INFO     | app.core.scan_manager:66 | Scan loop started. Interval: every 24h
+2026-04-05 19:38:40 | INFO     | app.core.scan_manager:109 | Starting scan #3...
+2026-04-05 19:38:41 | INFO     | app.services.jobs.job_service:27 | Starting job scraping run...
+2026-04-05 19:38:41 | INFO     | app.services.jobs.job_service:52 | Scraping default boards: ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 19:38:41 | ERROR    | app.services.jobs.job_service:66 | Default board scraping failed: cannot access local variable 'sites' where it is not associated with a value
+2026-04-05 19:38:41 | SUCCESS  | app.services.jobs.job_service:107 | Scraping done. Scraped: 0, New: 0
+2026-04-05 19:38:41 | INFO     | app.services.matching.matcher:58 | Starting skill matching run...
+2026-04-05 19:38:41 | INFO     | app.services.matching.matcher:74 | No new jobs to match.
+2026-04-05 19:38:41 | SUCCESS  | app.core.scan_manager:163 | Scan #3 done — new: 0, matched: 0, duration: 1s
+2026-04-05 19:38:41 | INFO     | app.core.scan_manager:86 | Next scan at: 2026-04-06 19:38
+2026-04-05 19:39:16 | INFO     | app.main:34 | Shutting down...
+2026-04-05 19:39:16 | INFO     | app.core.scan_manager:51 | Scan manager stopped
+2026-04-05 19:39:19 | INFO     | app.main:20 | Starting Career Agent...
+2026-04-05 19:39:19 | SUCCESS  | app.db.init_db:10 | Database tables created ✅
+2026-04-05 19:39:19 | SUCCESS  | app.main:24 | Database ready ✅
+2026-04-05 19:39:19 | SUCCESS  | app.core.scan_manager:44 | Scan manager started ✅
+2026-04-05 19:39:19 | SUCCESS  | app.main:29 | Scan manager started ✅
+2026-04-05 19:39:19 | INFO     | app.core.scan_manager:66 | Scan loop started. Interval: every 24h
+2026-04-05 19:39:20 | INFO     | app.core.scan_manager:109 | Starting scan #1...
+2026-04-05 19:39:21 | INFO     | app.services.jobs.job_service:27 | Starting job scraping run...
+2026-04-05 19:39:21 | INFO     | app.services.jobs.job_service:52 | Scraping default boards: ['linkedin', 'indeed', 'glassdoor', 'zip_recruiter']
+2026-04-05 19:39:21 | ERROR    | app.services.jobs.job_service:66 | Default board scraping failed: cannot access local variable 'sites' where it is not associated with a value
+2026-04-05 19:39:21 | SUCCESS  | app.services.jobs.job_service:107 | Scraping done. Scraped: 0, New: 0
+2026-04-05 19:39:21 | INFO     | app.services.matching.matcher:58 | Starting skill matching run...
+2026-04-05 19:39:21 | INFO     | app.services.matching.matcher:74 | No new jobs to match.
+2026-04-05 19:39:22 | SUCCESS  | app.core.scan_manager:163 | Scan #1 done — new: 0, matched: 0, duration: 1s
+2026-04-05 19:39:22 | INFO     | app.core.scan_manager:86 | Next scan at: 2026-04-06 19:39
+2026-04-05 19:49:12 | INFO     | app.services.resume.generator:24 | Starting CV generation...
+2026-04-05 19:49:14 | SUCCESS  | app.services.resume.generator:66 | CV generated: resume/output/cv_20260405_194912.pdf

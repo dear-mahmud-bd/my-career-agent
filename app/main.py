@@ -18,10 +18,21 @@ from app.api.v1.router import router
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info(f"Starting {settings.app_name}...")
+
+    # Init database
     await init_db()
     logger.success("Database ready ✅")
+
+    # Start continuous scan loop
+    from app.core.scan_manager import scan_manager
+    scan_manager.start()
+    logger.success("Scan manager started ✅")
+
     yield
+
+    # Shutdown
     logger.info("Shutting down...")
+    scan_manager.stop()
 
 
 # ─────────────────────────────

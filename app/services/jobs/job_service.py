@@ -9,6 +9,7 @@ from app.services.jobs.sources.career_page import scrape_career_page
 from app.services.jobs.sources.custom_scraper import scrape_custom_url
 from app.core.logger import logger
 from datetime import datetime
+from app.core.config import settings
 
 
 class JobService:
@@ -18,12 +19,13 @@ class JobService:
 
     async def run_all_scrapers(self) -> int:
         """
-        Run all active scrapers based on sources in DB.
+        Run all active scrapers.
+        Even with no sources in DB, scrapes from
+        JOB_SITES in .env automatically.
         Returns total new jobs saved.
         """
         logger.info("Starting job scraping run...")
 
-        # Get active preferences
         preferences = await self._get_preferences()
         if not preferences:
             logger.warning(
@@ -32,7 +34,6 @@ class JobService:
             )
             return 0
 
-        # Get job titles from preferences
         job_titles = []
         if preferences.job_titles:
             job_titles = [
@@ -42,12 +43,15 @@ class JobService:
             ]
 
         if not job_titles:
-            logger.warning("No job titles set in preferences.")
+            logger.warning("No job titles in preferences.")
             return 0
 
         all_raw_jobs = []
 
-        # ── 1. JobSpy (LinkedIn, Indeed etc.) ──
+        # ── 1. Always scrape from .env JOB_SITES ──
+        logger.info(
+            f"Scraping default boards: {settings.job_sites_list}"
+        )
         try:
             jobspy_jobs = await scrape_jobspy(
                 job_titles=job_titles,
@@ -55,11 +59,18 @@ class JobService:
                 work_type=preferences.work_type,
             )
             all_raw_jobs.extend(jobspy_jobs)
+            logger.info(
+                f"Default boards: {len(jobspy_jobs)} jobs found"
+            )
         except Exception as e:
-            logger.error(f"JobSpy scraper error: {e}")
+            logger.error(f"Default board scraping failed: {e}")
 
-        # ── 2. Custom sources from DB ──
+        # ── 2. Also scrape custom sources from DB ──
         sources = await self._get_active_sources()
+        if sources:
+            logger.info(
+                f"Scraping {len(sources)} custom sources from DB"
+            )
         for source in sources:
             try:
                 if source.source_type == "rss":
@@ -80,27 +91,23 @@ class JobService:
                     )
 
                 all_raw_jobs.extend(jobs)
-
-                # Update last scraped time
                 source.last_scraped_at = datetime.now().isoformat()
                 source.total_jobs_found += len(jobs)
 
             except Exception as e:
-                logger.error(
-                    f"Scraper error for {source.url}: {e}"
-                )
+                logger.error(f"Source {source.url} failed: {e}")
                 continue
 
         await self.db.commit()
 
-        # ── 3. Save new jobs to DB ──
+        # ── 3. Save new jobs ──
         new_count = await self._save_new_jobs(
             all_raw_jobs, preferences
         )
         logger.success(
-            f"Scraping complete. "
-            f"Total scraped: {len(all_raw_jobs)}, "
-            f"New saved: {new_count}"
+            f"Scraping done. "
+            f"Scraped: {len(all_raw_jobs)}, "
+            f"New: {new_count}"
         )
         return new_count
 

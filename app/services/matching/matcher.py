@@ -104,17 +104,10 @@ class SkillMatcher:
         job: Job,
         skills_text: str,
     ) -> JobMatch | None:
-        """Match a single job against candidate skills."""
-
         description = job.description or job.title
         if not description or len(description) < 20:
-            logger.warning(
-                f"Skipping job {job.id} — "
-                f"description too short"
-            )
             return None
 
-        # Truncate description to avoid token limits
         description = description[:3000]
 
         prompt = MATCH_PROMPT_TEMPLATE.format(
@@ -137,30 +130,86 @@ class SkillMatcher:
             )
             return None
 
-        # Parse JSON response
         parsed = self._parse_llm_response(response.content)
         if not parsed:
-            logger.warning(
-                f"Failed to parse LLM response for job {job.id}"
-            )
             return None
 
         match_score = float(parsed.get("match_score", 0))
+        matched_skills = parsed.get("matched_skills", "")
+        missing_skills = parsed.get("missing_skills", "")
+        match_reason = parsed.get("match_reason", "")
+
+        # Check if above threshold for notification
+        threshold = settings.job_match_threshold
+        notification_sent = False
 
         match = JobMatch(
             job_id=job.id,
             match_score=match_score,
-            match_reason=parsed.get("match_reason", ""),
-            matched_skills=parsed.get("matched_skills", ""),
-            missing_skills=parsed.get("missing_skills", ""),
+            match_reason=match_reason,
+            matched_skills=matched_skills,
+            missing_skills=missing_skills,
             llm_provider_used=response.provider,
         )
         self.db.add(match)
 
+        # ── Send Telegram if good match ──
+        if match_score >= threshold:
+            try:
+                from app.services.notifications.telegram import (
+                    TelegramNotifier,
+                )
+                notifier = TelegramNotifier()
+                job_dict = {
+                    "job_id": job.id,
+                    "title": job.title,
+                    "company": job.company,
+                    "location": job.location or "",
+                    "url": job.url,
+                    "work_type": job.work_type or "unknown",
+                    "location_type": job.location_type or "unknown",
+                    "salary_min": job.salary_min,
+                    "salary_max": job.salary_max,
+                    "match_score": match_score,
+                    "match_reason": match_reason,
+                    "matched_skills": matched_skills,
+                    "missing_skills": missing_skills,
+                    "llm_provider": response.provider,
+                }
+                sent = await notifier.send_job_match(job_dict)
+                if sent:
+                    notification_sent = True
+                    from datetime import datetime
+                    match.notification_sent = True
+                    match.notification_sent_at = (
+                        datetime.now().isoformat()
+                    )
+            except Exception as e:
+                logger.error(f"Telegram notify failed: {e}")
+
+        # ── Write to job result log ──
+        from app.core.job_logger import log_job_result
+        log_job_result(
+            job={
+                "title": job.title,
+                "company": job.company,
+                "location": job.location or "",
+                "work_type": job.work_type or "",
+                "location_type": job.location_type or "",
+                "url": job.url,
+            },
+            match_score=match_score,
+            matched_skills=matched_skills,
+            missing_skills=missing_skills,
+            match_reason=match_reason,
+            llm_provider=response.provider,
+            notification_sent=notification_sent,
+        )
+
         logger.info(
-            f"Job '{job.title}' at '{job.company}' "
-            f"→ score: {match_score} "
-            f"[{response.provider}]"
+            f"'{job.title}' @ '{job.company}' "
+            f"→ {match_score:.1f}% [{response.provider}]"
+            f"{' 🔔' if notification_sent else ''}"
         )
 
         return match

@@ -1,0 +1,14 @@
+
+============================================================
+[2026-04-05T14:08:12.897294]
+JOB    : Test Engineer @ Test Corp
+LOC    : Dhaka | remote | local
+URL    : https://example.com/job/1
+SCORE  : 82.5%
+ACTION : RECOMMENDED — Worth applying
+MATCH  : Python, FastAPI, Docker
+MISS   : Kubernetes
+REASON : Strong Python match
+NOTIFY : ✅ Sent to Telegram
+LLM    : groq
+JSON   : {"timestamp": "2026-04-05T14:08:12.897294", "title": "Test Engineer", "company": "Test Corp", "location": "Dhaka", "work_type": "remote", "location_type": "local", "url": "https://example.com/job/1", "match_score": 82.5, "matched_skills": "Python, FastAPI, Docker", "missing_skills": "Kubernetes", "match_reason": "Strong Python match", "action": "RECOMMENDED \u2014 Worth applying", "notification": "\u2705 Sent to Telegram", "llm_provider": "groq"}

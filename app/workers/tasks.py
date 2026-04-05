@@ -23,13 +23,29 @@ def run_async(coro):
     default_retry_delay=300,
 )
 def scrape_and_match_jobs(self):
-    """Scrape jobs from all sources and match against skills."""
     try:
         logger.info("Task: scrape_and_match_jobs started")
         result = run_async(_scrape_and_match())
-        logger.success(f"Task: scrape_and_match_jobs done → {result}")
+
+        # Update scan status
+        try:
+            from app.api.v1.endpoints.jobs import _scan_status
+            from datetime import datetime
+            _scan_status["running"] = False
+            _scan_status["last_result"] = result
+        except Exception:
+            pass
+
+        logger.success(
+            f"Task: scrape_and_match_jobs done → {result}"
+        )
         return result
     except Exception as e:
+        try:
+            from app.api.v1.endpoints.jobs import _scan_status
+            _scan_status["running"] = False
+        except Exception:
+            pass
         logger.error(f"Task: scrape_and_match_jobs failed → {e}")
         raise self.retry(exc=e)
 
@@ -38,21 +54,43 @@ async def _scrape_and_match() -> dict:
     from app.db.database import AsyncSessionLocal
     from app.services.jobs.job_service import JobService
     from app.services.matching.matcher import SkillMatcher
+    from app.services.notifications.telegram import TelegramNotifier
+    from app.core.config import settings
+
+    notifier = TelegramNotifier()
+
+    # ── Notify scan started ──
+    await notifier.send_message(
+        "🔍 *Job Scan Started*\n"
+        "━━━━━━━━━━━━━━━━━━━━\n"
+        f"Scanning: {settings.job_sites}\n"
+        f"Threshold: {settings.job_match_threshold}%\n"
+        "I'll notify you when good matches are found.\n"
+        "━━━━━━━━━━━━━━━━━━━━\n"
+        "🤖 _Career Agent_"
+    )
 
     async with AsyncSessionLocal() as db:
-        # Scrape
         job_service = JobService(db)
         new_jobs = await job_service.run_all_scrapers()
 
-        # Match
         matcher = SkillMatcher(db)
         matched = await matcher.match_all_pending_jobs()
 
-        return {
-            "new_jobs_scraped": new_jobs,
-            "jobs_matched": matched,
-        }
+    # ── Notify scan completed ──
+    await notifier.send_message(
+        "✅ *Job Scan Complete*\n"
+        "━━━━━━━━━━━━━━━━━━━━\n"
+        f"📥 New jobs found : {new_jobs}\n"
+        f"🎯 Jobs matched   : {matched}\n"
+        "━━━━━━━━━━━━━━━━━━━━\n"
+        "🤖 _Career Agent_"
+    )
 
+    return {
+        "new_jobs_scraped": new_jobs,
+        "jobs_matched": matched,
+    }
 
 # ─────────────────────────────
 # Task 2 — Send Notifications
@@ -242,3 +280,5 @@ async def _regenerate_cv() -> dict:
         generator = CVGenerator(db)
         path = await generator.generate()
         return {"cv_path": str(path)}
+    
+

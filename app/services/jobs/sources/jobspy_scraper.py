@@ -25,6 +25,26 @@ async def scrape_jobspy(
         is_remote = True
     elif work_type == "onsite":
         is_remote = False
+    # For "any" or "hybrid" — don't pass is_remote at all
+
+    # Build scrape kwargs
+    scrape_kwargs = {
+        "site_name": sites,
+        "search_term": title,
+        "results_wanted": results_per_site,
+        "hours_old": 48,
+        "country_indeed": "worldwide",
+    }
+
+    # Only add location if set
+    if location:
+        scrape_kwargs["location"] = location
+
+    # Only add is_remote if explicitly true/false
+    if is_remote is not None:
+        scrape_kwargs["is_remote"] = is_remote
+
+    jobs_df: pd.DataFrame = scrape_jobs(**scrape_kwargs)
 
     sites = settings.job_sites.split(",")
     sites = [s.strip() for s in sites]
